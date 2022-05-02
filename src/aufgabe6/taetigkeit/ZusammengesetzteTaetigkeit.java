@@ -10,7 +10,10 @@ public abstract class ZusammengesetzteTaetigkeit implements Taetigkeit {
     }
 
     public void add(Taetigkeit k) {
-
+        if (meineTaetigkeit.contains(k)) {
+            return; //Bereits in Liste
+        }
+        meineTaetigkeit.add(k);
     }
 
     public void remove(Taetigkeit k) {
@@ -18,6 +21,10 @@ public abstract class ZusammengesetzteTaetigkeit implements Taetigkeit {
     }
 
     public int getAnzahl() {
-        return 0;
+        int count = 0;
+        for (var x : meineTaetigkeit) {
+            count += x.getAnzahl();
+        }
+        return count;
     }
 }
