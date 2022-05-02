@@ -1,13 +1,12 @@
 package aufgabe6.taetigkeit;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public abstract class ZusammengesetzteTaetigkeit implements Taetigkeit {
-    protected List<Taetigkeit> meineTaetigkeit;
+    protected List<Taetigkeit> meineTaetigkeit = new LinkedList<>();
 
-    public double getTime() {
-        return 0;
-    }
+    public abstract double getTime();
 
     public void add(Taetigkeit k) {
         if (meineTaetigkeit.contains(k)) {
@@ -17,7 +16,7 @@ public abstract class ZusammengesetzteTaetigkeit implements Taetigkeit {
     }
 
     public void remove(Taetigkeit k) {
-
+        meineTaetigkeit.removeIf(x -> x.equals(k));
     }
 
     public int getAnzahl() {
