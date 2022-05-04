@@ -34,7 +34,8 @@ public class Buch {
     public boolean wirdZurueckGegeben() {
         if (entleiher.equals(new Person("niemandem")))  // Buch war nicht verliehen
             return false;
-        else {                  //Buch war verliehen
+        else {
+            entleiher.ausgelieheneBuecher.remove(this);//Buch war verliehen
             entleiher = new Person("niemandem");
             return true;
         }
