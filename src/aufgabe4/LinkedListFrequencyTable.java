@@ -1,27 +1,28 @@
 package aufgabe4;
 
+import java.util.ConcurrentModificationException;
 import java.util.Iterator;
-import java.util.NoSuchElementException;
 
 public class LinkedListFrequencyTable<T> extends AbstractFrequencyTable<T> {
+    private Node<T> begin;
+    private Node<T> end;
     private int size;
-    Node<?> head, end;
+    private int modCount;
 
     public LinkedListFrequencyTable() {
+        this.modCount = 0;
         clear();
     }
 
+    private static class Node<T> {
+        private Node<T> next;
+        private Node<T> prev;
+        private Element<T> element;
 
-    static class Node<T> {
-        Node<?> next;
-        Node<?> prev;
-        Element<?> data;
-
-
-        public Node(Element<?> data, Node<?> n, Node<?> p) {
-            this.data = data;
-            this.next = n;
-            this.prev = p;
+        public Node(Element<T> w, Node<T> n, Node<T> p) {
+            element = w;
+            next = n;
+            prev = p;
         }
     }
 
@@ -32,109 +33,99 @@ public class LinkedListFrequencyTable<T> extends AbstractFrequencyTable<T> {
 
     @Override
     public void clear() {
-        size = 0;
-        head = new Node<>(null, null, null);
-        end = new Node<>(null, null, head);
-        head.next = end;
+        this.end = new Node(null, null, null);
+        this.begin = new Node(null, this.end, null);
+        this.end.prev = this.begin;
+        this.size = 0;
+        this.modCount++;
     }
 
     @Override
     public void add(T w, int f) {
-        if (size == 0) {
-            addAt(end, new Element<>(w, f));
-            size++;
-            return;
-        }
-
-        for (Node<?> temp = head.next; temp.next != null; temp = temp.next) { // überprüft, ob das Wort schon vorhanden ist
-            if (temp.data.getWord().equals(w)) {
-                temp.data.addFrequency(f);
-                this.moveToLeft(temp);
+        Node<T> n = this.begin;
+        for (int i = 0; i < this.size; i++) {
+            n = n.next;
+            if (n.element.getData().equals(w)) {
+                n.element.addFrequency(f);
+                moveToLeft(n);
                 return;
             }
         }
-        end.prev = new Node<>(new Element<>(w, f), end, end.prev);
-        end.prev.prev.next = end.prev;
-        size++;
-        if (size >= 2) {
-            moveToLeft(end.prev);
-        }
-    }
+        n.next = new Node(new Element(w, f), n.next, n);
+        this.end.prev = n.next;
 
-    private void moveToLeft(Node<?> move) {
-        if (move == head.next || move.prev.data.getFrequency() > move.data.getFrequency()) {
-            return; // überprüft, ob das Wort schon ganz vorne steht
-        }
-        for (Node<?> temp = head.next; temp.next != null; temp = temp.next) {
-            if (temp.data.getFrequency() < move.data.getFrequency()) {
-                move.prev.next = move.next;
-                move.next.prev = move.prev;
-                addAt(temp, move.data);
-                return;
-            }
-        }
-    }
+        // Muss nur sortiert werden, wenn der zweite oder mehr Einträge eingefügt wird
+        //if (this.size > 0) {
+            moveToLeft(n.next);
+        //}
 
-    private void addAt(Node<?> at, Element<?> w) {
-        if (at == head) {
-            throw new RuntimeException("bist du dumm?");
-        }
-        if (at == end) {
-            if (end.prev == head) {
-                head.next = new Node<>(w, end, head);
-                end.prev = head.next;
-            } else
-                addAt(end.prev, w);
-        } else {
-            at.prev = new Node<>(w, at, at.prev);
-            at.prev.prev.next = at.prev;
-        }
+        this.size++;
+        this.modCount++;
     }
 
     @Override
     public Element<T> get(int pos) {
-        if (pos < 0 || pos > size)
-            throw new RuntimeException("des goht do ned");
-        int i = 0;
-        for (Node<?> temp = head.next; temp.next != null; temp = temp.next) {
-            if (i == pos) {
-                return (Element<T>) temp.data;
+        if (pos <= (this.size - 1)) {
+            Node<T> n = this.begin;
+
+            for (int i = 0; i <= pos; i++) {
+                n = n.next;
             }
-            i++;
+            return n.element;
         }
-        throw new RuntimeException("des gits ned");
+        return null;
     }
 
     @Override
     public int get(T w) {
-        for (Node<?> temp = head.next; temp.next != null; temp = temp.next) {
-            if (temp.data.getWord().equals(w)) {
-                return temp.data.getFrequency();
+        Node<T> n = this.begin;
+        while (n.next != null) {
+            n = n.next;
+
+            if (n.element != null && n.element.getData().equals(w)) {
+                return n.element.getFrequency();
             }
         }
         return 0;
     }
 
-    public Iterator<T> iterator() {
-        return new LinkedListIterator();
+    // verschiebt das Objekt an der übergebenen Position an die richtige Position
+    // von groß nach klein sortiert
+    private void moveToLeft(Node<T> n) {
+        // das letzte (neu hinzugefügte) Wort zwischen speichern
+        Element<T> w = n.element;
+        while (n.prev.prev != null && this.size > 0 && n.element.getFrequency() > n.prev.element.getFrequency()) {
+            // Nur die Wörter tauschen und nicht die Referenzen (prev, next) auf die Wörter
+            n.element = n.prev.element;
+            n.prev.element = w;
+            n = n.prev;
+        }
     }
 
-    private class LinkedListIterator implements Iterator<T> {
-        private Node<?> current = head;
+    @Override
+    public Iterator<Element<T>> iterator() {
+        return new LinkedListFrequencyTableIterator();
+    }
 
-        public boolean hasNext() {
-            return current.next != null;
+    private class LinkedListFrequencyTableIterator implements Iterator<Element<T>>
+    {
+        private Node<T> current = begin;
+        private int expectedMod = modCount;
+
+        @Override
+        public boolean hasNext()
+        {
+            return current.next != end;
         }
 
-        public T next() {
-            if (!hasNext())
-                throw new NoSuchElementException();
+        @Override
+        public Element<T> next()
+        {
+            if (expectedMod != modCount)
+                throw new ConcurrentModificationException();
+
             current = current.next;
-            return (T) current.data;
-        }
-
-        public void remove() {
-            throw new UnsupportedOperationException("Des gibts ned!");
+            return current.element;
         }
 
     }

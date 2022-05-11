@@ -1,18 +1,22 @@
 package aufgabe4;
 
 import java.util.Arrays;
+import java.util.ConcurrentModificationException;
 import java.util.Iterator;
-import java.util.NoSuchElementException;
 
 /**
+ *
  * @author oliverbittel
  * @since 25.03.2021
  */
 public class ArrayFrequencyTable<T> extends AbstractFrequencyTable<T> {
     private int size;
     private Element<T>[] fqTable;
+    private final int DEFAULT_SIZE = 100;
+    private int modCount;
 
     public ArrayFrequencyTable() {
+        this.modCount = 0;
         clear();
     }
 
@@ -23,42 +27,53 @@ public class ArrayFrequencyTable<T> extends AbstractFrequencyTable<T> {
 
     @Override
     public final void clear() {
-        size = 0;
-        fqTable = new Element[100];
+        this.fqTable = new Element[this.DEFAULT_SIZE];
+        this.size = 0;
+        this.modCount++;
     }
 
+    @Override
     public void add(T w, int f) {
-        if (this.size() >= this.fqTable.length) {
-            this.fqTable = Arrays.copyOf(fqTable, size * 2); //verdoppelt die länge das Arrays, falls es voll ist
-        }
-//        int index;
-//        for (int i = 0; i < this.size; i++) { // überprüft, ob das Wort schon vorhanden ist
-//            if (this.fqTable[i].getWord().equals(w)) {
-//                index = i;
-//                this.fqTable[index].addFrequency(f);
-//                this.movetoleft(index);
-//                return;
-//            }
-//        }
-        int index = -1;
-        for (var x : fqTable) {
-            index++;
-            if (x != null && x.getWord().equals(w)) {
-                x.addFrequency(f);
-                this.movetoleft(index);
+        for (int i = 0; i < this.size; i++) {
+            if (this.fqTable[i].getData().equals(w)) {
+                this.fqTable[i].addFrequency(f);
+                moveToLeft(i);
                 return;
             }
         }
-        // fügt ein neues Wort mit seiner Anzahl hinzu
-        this.fqTable[size++] = new Element<>(w, f);
-        this.movetoleft(size - 1);
+        if (this.size >= this.fqTable.length) {
+            fqTable = Arrays.copyOf(this.fqTable, this.size + DEFAULT_SIZE);
+        }
+        fqTable[this.size] = new Element<>(w, f);
+        moveToLeft(this.size);
+        this.size++;
+        this.modCount++;
     }
 
-    private void movetoleft(int pos) {
-        if (pos == 0)
-            return;
+    @Override
+    public Element<T> get(int pos) {
+        if (pos < size && pos >= 0)
+            return this.fqTable[pos];
+
+        return null;
+    }
+
+    @Override
+    public int get(T w) {
+        for (int i = 0; i < this.size; i++) {
+            if (this.fqTable[i].getData().equals(w)) {
+                return this.fqTable[i].getFrequency();
+            }
+        }
+        return 0;
+    }
+
+    // verschiebt das Objekt an der übergebenen Position an die richtige Position
+    // von groß nach klein sortiert
+    private void moveToLeft(int pos) {
         Element<T> w = fqTable[pos];
-        int i = pos - 1;
+        int i = pos-1;
+
         while (i >= 0 && w.getFrequency() > fqTable[i].getFrequency()) {
             fqTable[i + 1] = fqTable[i];
             i--;
@@ -66,45 +81,30 @@ public class ArrayFrequencyTable<T> extends AbstractFrequencyTable<T> {
         fqTable[i + 1] = w;
     }
 
-
     @Override
-    public Element<T> get(int pos) {
-        return fqTable[pos];
+    public Iterator<Element<T>> iterator()
+    {
+        return new ArrayFrequencyTableIterator();
     }
 
-    @Override
-    public int get(T w) {
-//        for (int i = 0; i < this.size; i++) { // fügt Wörter der Ausgabe hinzu
-//            if (this.fqTable[i].getWord().equals(w))
-//                return this.fqTable[i].getFrequency();
-//        }
-        for (var x : fqTable) {
-            if (x != null && x.getWord().equals(w))
-                return x.getFrequency();
-        }
-        return 0;
-    }
+    private class ArrayFrequencyTableIterator implements Iterator<Element<T>>
+    {
+        private int index = 0;
+        private final int expectedMod = modCount;
 
-    public Iterator<T> iterator() {
-        return new ArrayListIterator();
-    }
-
-    private class ArrayListIterator implements Iterator<T> {
-        int current = -1;
-
-        public boolean hasNext() {
-            return current <= size && fqTable[current + 1] != null;
+        @Override
+        public boolean hasNext()
+        {
+            return index < size();
         }
 
-        public T next() {
-            if (hasNext()) {
-                return (T) fqTable[++current];
-            } else
-                throw new NoSuchElementException();
-        }
+        @Override
+        public Element<T> next()
+        {
+            if (expectedMod != modCount)
+                throw new ConcurrentModificationException();
 
-        public void remove() {
-            throw new UnsupportedOperationException("Des gibts ned!");
+            return fqTable[index++];
         }
     }
 }

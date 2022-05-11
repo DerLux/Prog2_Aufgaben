@@ -6,25 +6,25 @@ package aufgabe4;
  * @since 22.3.2019
  */
 public class Element<T> {
-    final private T word;
-    private int freqency;
+    final private T data;
+    private int frequency;
 
     /**
      * Konstruktor.
-     * @param word Wort
+     * @param data Data
      * @param f H&auml;ufgkeit
      */
-    public Element(T word, int f) {
-        this.word = word;
-        this.freqency = f;
+    public Element(T data, int f) {
+        this.data = data;
+        this.frequency = f;
     }
 
     /**
      * Liefert Wort zur&uuml;ck.
      * @return Wort
      */
-    public T getWord() {
-        return word;
+    public T getData() {
+        return data;
     }
 
     /**
@@ -32,7 +32,7 @@ public class Element<T> {
      * @return H&auml;ufgkeit
      */
     public int getFrequency() {
-        return freqency;
+        return frequency;
     }
 
     /**
@@ -40,7 +40,7 @@ public class Element<T> {
      * @param f H&auml;ufgkeits&auml;nderung.
      */
     public void addFrequency(int f) {
-        freqency += f;
+        frequency += f;
     }
 
     /**
@@ -49,6 +49,6 @@ public class Element<T> {
      */
     @Override
     public String toString() {
-        return word + ":" + freqency;
+        return data + ":" + frequency;
     }
 }

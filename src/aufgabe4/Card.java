@@ -1,52 +1,63 @@
 package aufgabe4;
 
-import java.util.Objects;
+public abstract class Card implements Comparable<Card>
+{
+    protected Suit suit;
+    protected Rank rank;
+    protected Rank[] ranks = rank.values();
 
-public abstract class Card {
-    String Suit;
-    String Rank;
-
-    public final static String HEARTS = "Herz";
-    public final static String PIQUE = "Pique";
-    public final static String KARO = "Karo";
-    public final static String KREUZ = "Kreuz";
-
-    public final static String SEVEN = "7";
-    public final static String EIGHT = "8";
-    public final static String NINE = "9";
-    public final static String TEN = "10";
-    public final static String JACK = "Bube";
-    public final static String QUEEN = "Dame";
-    public final static String KING = "König";
-    public final static String ACE = "Ass";
-
-    public static String[] Suits = {HEARTS, PIQUE, KARO, KREUZ};
-    public static String[] SuitsRed = {HEARTS, KARO};
-    public static String[] SuitsBlack = {PIQUE, KREUZ};
-    public static String[] Ranks = {SEVEN,EIGHT,NINE,TEN,JACK,QUEEN,KING, ACE};
-
-
-    public int get(String w) {
-        return 0;
+    public Suit getSuit()
+    {
+        return suit;
     }
-    @Override
-    public String toString() {
-        return Suit + " " + Rank;
+
+    public void setSuit(Suit suit)
+    {
+        this.suit = suit;
+    }
+
+    public Rank getRank()
+    {
+        return rank;
+    }
+
+    public void setRank(Rank rank)
+    {
+        this.rank = rank;
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Card card)) return false;
-        return Suit.equals(card.Suit) && Rank.equals(card.Rank);
+        if (o instanceof Card c) {
+            return (this.suit == c.suit && this.rank == c.rank);
+        }
+        return false;
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(Suit, Rank);
+    public String toString() {
+        return this.suit + " " + this.rank;
     }
 
-    public Boolean equals() {
-        return false;
+    public enum Suit
+    {
+        Karo, Herz, Pik, Kreuz
     }
+
+    public enum Rank
+    {
+        Sieben, Acht, Neun, Zehn, Bube, Dame, Koenig, Ass
+    }
+
+    @Override
+    public int compareTo(Card c)
+    {
+        if (this.suit.compareTo(c.suit) == 0)
+            return this.rank.compareTo(c.rank);
+        else if (this.suit.compareTo(c.suit) > 0)
+            return 1;
+        else
+            return -1;
+    }
+
 }

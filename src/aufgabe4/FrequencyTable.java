@@ -1,84 +1,84 @@
 package aufgabe4;
 
 /**
- *extends Iterable<T>
+ *
  * @author oliverbittel
  * @since 12.2.2020
  */
-public interface FrequencyTable<T> extends Iterable<T> {
+public interface FrequencyTable<T> extends Iterable<Element<T>> {
     /**
-     * Liefert die Anzahl der W&ouml;rter in dieser Tabelle zur&uuml;ck.
-     * @return Anzahl der H&auml;ufigkeitseintr&auml;ge.
+     * Liefert die Anzahl der Wörter in dieser Tabelle zurück.
+     * @return Anzahl der Häufigkeitseinträge.
      */
     int size();
 
     /**
-     * Pr&uuml;ft, ob die Tabelle leer ist.
+     * Prüft, ob die Tabelle leer ist.
      * @return true, falls diese Tabelle leer ist, sonst false.
      */
     boolean isEmpty();
 
     /**
-     * L&ouml;scht die Tabelle.
+     * Löscht die Tabelle.
      */
     void clear();
 
     /**
-     * F&uuml;gt das Wort w mit der H&auml;ufigkeit f zu dieser Tabelle dazu.
+     * Fügt das Wort w mit der Häufigkeit f zu dieser Tabelle dazu.
      * Falls w bereits in der Tabelle enthalten ist,
-     * wird die H&auml;ufigkeit um f erhÃ¶ht.
+     * wird die Häufigkeit um f erhöht.
      * @param w Wort.
-     * @param f H&auml;ufigkeit.
+     * @param f Häufigkeit.
      */
     void add(T w, int f);
 
     /**
-     * F&uuml;gt das Wort w mit der H&auml;ufigkeit 1 zu dieser Tabelle dazu.
+     * Fügt das Wort w mit der Häufigkeit 1 zu dieser Tabelle dazu.
      * Falls w bereits in der Tabelle enthalten ist,
-     * wird die H&auml;ufigkeit um 1 erhÃ¶ht.
+     * wird die Häufigkeit um 1 erhöht.
      * @param w Wort.
      */
     void add(T w);
 
     /**
-     * F&uuml;gt alle W&ouml;rter mit ihren H&auml;ufigkeiten aus fq zu dieser Tabelle dazu.
-     * H&auml;ufigkeiten fu&uumlr gleiche W&ouml;rter werden addiert.
-     * fq bleibt unver&auml;ndert.
-     * @param fq H&auml;ufigkeitstabelle.
+     * Fügt alle Wörter mit ihren Häufigkeiten aus fq zu dieser Tabelle dazu.
+     * Häufigkeiten für gleiche Wörter werden addiert.
+     * fq bleibt unverändert.
+     * @param fq Häufigkeitstabelle.
      */
     void addAll(FrequencyTable<? extends T> fq);
 
     /**
-     * Liefert das Wort mit seiner HÃ¤ufigkeit zur&uuml;ck, das mit seiner H&auml;ufigkeit an Position pos steht.
-     * get(0) liefert das hÃ¤ufigste Wort zurÃ¼ck,
-     * get(1) liefert das zweithÃ¤ufigste Wort zurÃ¼ck, usw.
+     * Liefert das Wort mit seiner Häufigkeit zurück, das mit seiner Häufigkeit an Position pos steht.
+     * get(0) liefert das häufigste Wort zurück,
+     * get(1) liefert das zweithäufigste Wort zurück, usw.
      * @param pos Position.
-     * @return Wort mit H&auml;ufigkeit oder null,
-     * falls die Tabelle weniger als pos-1 Elemente  enth&auml;lt.
+     * @return Wort mit Häufigkeit oder null,
+     * falls die Tabelle weniger als pos-1 Elemente enthält.
      */
     Element<T> get(int pos);
 
     /**
-     * Liefert die H&auml;ufigkeit des Worts w zur&uuml;ck.
-     * Falls das Wort nicht vorkommt, wird 0 zur&uuml;ckgeliefert.
+     * Liefert die Häufigkeit des Worts w zurück.
+     * Falls das Wort nicht vorkommt, wird 0 zurückgeliefert.
      * @param w Wort
-     * @return H&auml;ufigkeit.
+     * @return Häufigkeit.
      */
     int get(T w);
 
     /**
-     * Sammelt alle W&ouml;rter mit der gr&ouml;ssten H&auml;ufigkeit und speichert sie in fq.
+     * Sammelt alle Wörter mit der größten Häufigkeit und speichert sie in fq.
      * Beispiel:
      * Falls tab1 = {"ein":3, "das":3, "ist":2, "der:1", "die":1}, dann
      * gilt nach Aufruf von tab1.collectMostFrequent(tab2):
      * tab2 = {"ein":3, "das":3}.
-     * @param fq H&auml;ufigkeitstabelle.
+     * @param fq Häufigkeitstabelle.
      */
     void collectMostFrequent(FrequencyTable<? super T> fq);
 
     /**
-     * Sammelt alle W&ouml;rter mit der H&auml;ufigkeit 1 und speichert sie in fq.
-     * @param fq H&auml;ufigkeitstabelle.
+     * Sammelt alle Wörter mit der Häufigkeit 1 und speichert sie in fq.
+     * @param fq Häufigkeitstabelle.
      */
     void collectLeastFrequent(FrequencyTable<? super T> fq);
 }
