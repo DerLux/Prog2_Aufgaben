@@ -1,6 +1,6 @@
 package aufgabe7;
 
-public class QuickSort<T> {
+public class QuickSort {
 
     public static <T extends Comparable<T>> void quickSort(T[] a, int left, int right) {
         if (left < right) {

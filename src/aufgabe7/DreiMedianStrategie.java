@@ -1,6 +1,7 @@
 package aufgabe7;
 
 public class DreiMedianStrategie {
+
     public static <T extends Comparable<T>> void quickSortMedian(T[] a, int left, int right) {
         if (left < right) {
             if (right - left <= 100) {
