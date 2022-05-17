@@ -31,15 +31,15 @@ public class Aufgabe7_test<T> {
         list2 = list.clone();
         list3 = list.clone();
 
-        //Quicksort();
-        //QuickortMedian();
-        //Arraysort();
-        //Stringsort();
-        Cardsort();
+        //QuickSort();
+        //QuickSortMedian();
+        //ArraySort();
+        //StringSort();
+        CardSort();
         System.out.println("");
     }
 
-    private static void Cardsort() {
+    private static void CardSort() {
         int len = 200000;
         Card[] cardTab1 = new Card[len];
 
@@ -63,6 +63,8 @@ public class Aufgabe7_test<T> {
         double elapsedTime = (double) (end - start) / 1.0e06; // Zeit in msec
         System.out.println("\nBenötigte Zeit für Cardsort in msec: " + elapsedTime);
 
+
+        // Sortieren von einem sortiertem Array
         start = System.nanoTime();
         //QuickSort.quickSort(cardTab1,0,len-1);
         //DreiMedianStrategie.quickSortMedian(cardTab1,0,len-1);
@@ -72,7 +74,7 @@ public class Aufgabe7_test<T> {
         System.out.println("\nBenötigte Zeit für Cardsort sortet in msec: " + elapsedTime);
     }
 
-    private static void Stringsort() throws FileNotFoundException,IOException{
+    private static void StringSort() throws FileNotFoundException, IOException {
         LineNumberReader in;
         in = new LineNumberReader(new FileReader("Kafka_Der_Prozess.txt"));
         String line;
@@ -82,7 +84,7 @@ public class Aufgabe7_test<T> {
         while ((line = in.readLine()) != null) {
             String[] wf = line.split("[^a-z^A-Z^ß^ä^ö^ü^Ä^Ö^Ü]+");
 
-            for (String w: wf) {
+            for (String w : wf) {
                 if (w.length() == 0 || w.length() == 1)
                     continue;
                 //System.out.println(w);
@@ -94,7 +96,7 @@ public class Aufgabe7_test<T> {
 
         //System.out.println(stringList[0]);// Ausgabe des 1. Wertes im unsortierten Array
         int f = 0;
-        for(int i = 75000-1; i>=0; i--) {
+        for (int i = 75000 - 1; i >= 0; i--) {
             if (stringList[i - 1] != null) {
 
                 f = i;
@@ -102,32 +104,32 @@ public class Aufgabe7_test<T> {
             }
         }
         long start = System.nanoTime(); // aktuelle Zeit in nsec
-        QuickSort.quickSort(stringList,0,f-1);
+        QuickSort.quickSort(stringList, 0, f - 1);
         //DreiMedianStrategie.quickSortMedian(stringList,0,f-1);
         //Arrays.sort(stringList);
         //System.out.println(stringList[0]); // Ausgabe des 1. Wertes im sortierten Array
         long end = System.nanoTime();
-        double elapsedTime = (double)(end-start)/1.0e06; // Zeit in msec
+        double elapsedTime = (double) (end - start) / 1.0e06; // Zeit in msec
         System.out.println("\nBenötigte Zeit für Stringsort in msec: " + elapsedTime);
     }
 
-    private static void Quicksort() {
+    private static void QuickSort() {
         long start = System.nanoTime();
-        QuickSort.quickSort(list,0,199);
+        QuickSort.quickSort(list, 0, 199);
         long end = System.nanoTime();
         double elapsedTime = (double) (end - start) / 1.0e06; // Zeit in msec
         System.out.println("\nBenötigte Zeit für Quicksort in msec: " + elapsedTime);
     }
 
-    private static void QuickortMedian(){
+    private static void QuickSortMedian() {
         long start = System.nanoTime();
-        QuickSort.quickSort(list2,0,M-1);
+        QuickSort.quickSort(list2, 0, M - 1);
         long end = System.nanoTime();
         double elapsedTime = (double) (end - start) / 1.0e06; // Zeit in msec
         System.out.println("\nBenötigte Zeit für QuicksortMedian in msec: " + elapsedTime);
     }
 
-    private static void Arraysort(){
+    private static void ArraySort() {
         long start = System.nanoTime();
         Arrays.sort(list3);
         long end = System.nanoTime();
