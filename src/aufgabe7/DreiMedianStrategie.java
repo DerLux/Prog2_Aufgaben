@@ -19,21 +19,16 @@ public class DreiMedianStrategie {
     private static <T extends Comparable<T>> int partition(T[] a, int left, int right) {
         int mid = (left + right) / 2;
 
-        if (a[left].compareTo(a[right]) > 0)
-            swap(a, left, right);
-        if (a[mid].compareTo(a[right]) > 0)
-            swap(a, mid, right);
-        if (a[left].compareTo(a[mid]) > 0)
-            swap(a, left, mid);
+        if (a[left].compareTo(a[right]) > 0) swap(a, left, right);
+        if (a[mid].compareTo(a[right]) > 0) swap(a, mid, right);
+        if (a[left].compareTo(a[mid]) > 0) swap(a, left, mid);
 
         T pivot = a[(left + right) / 2];
 
         while (left <= right) {
-            while (a[left].compareTo(pivot) < 0)
-                left++;
+            while (a[left].compareTo(pivot) < 0) left++;
 
-            while (right >= left && a[right].compareTo(pivot) > 0)
-                right--;
+            while (right >= left && a[right].compareTo(pivot) > 0) right--;
 
             if (left <= right) {
                 swap(a, left, right);

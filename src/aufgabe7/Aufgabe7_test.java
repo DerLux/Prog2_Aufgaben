@@ -31,11 +31,11 @@ public class Aufgabe7_test<T> {
         list2 = list.clone();
         list3 = list.clone();
 
-        //QuickSort();
+        QuickSort();
         //QuickSortMedian();
         //ArraySort();
         //StringSort();
-        CardSort();
+        //CardSort();
         System.out.println("");
     }
 
@@ -56,9 +56,9 @@ public class Aufgabe7_test<T> {
         }
 
         long start = System.nanoTime();
-        //QuickSort.quickSort(cardTab1,0,len-1);
+        QuickSort.quickSort(cardTab1,0,len-1);
         //DreiMedianStrategie.quickSortMedian(cardTab1,0,len-1);
-        Arrays.sort(cardTab1);
+        //Arrays.sort(cardTab1);
         long end = System.nanoTime();
         double elapsedTime = (double) (end - start) / 1.0e06; // Zeit in msec
         System.out.println("\nBenötigte Zeit für Cardsort in msec: " + elapsedTime);
@@ -66,7 +66,7 @@ public class Aufgabe7_test<T> {
 
         // Sortieren von einem sortiertem Array
         start = System.nanoTime();
-        //QuickSort.quickSort(cardTab1,0,len-1);
+        QuickSort.quickSort(cardTab1,0,len-1);
         //DreiMedianStrategie.quickSortMedian(cardTab1,0,len-1);
         //Arrays.sort(cardTab1);
         end = System.nanoTime();
@@ -85,8 +85,7 @@ public class Aufgabe7_test<T> {
             String[] wf = line.split("[^a-z^A-Z^ß^ä^ö^ü^Ä^Ö^Ü]+");
 
             for (String w : wf) {
-                if (w.length() == 0 || w.length() == 1)
-                    continue;
+                if (w.length() == 0 || w.length() == 1) continue;
                 //System.out.println(w);
 
                 stringList[j] = w;
