@@ -5,14 +5,14 @@ public class QuickSort {
     public static <T extends Comparable<T>> void quickSort(T[] a, int left, int right) {
         if (left < right) {
             if (right - left <= 100) {
-                InsertionSort.insertionSort(a, left, right + 1);
+                InsertionSort.insertionSort(a, left, right);
                 return;
             }
 
             int pivot = partition(a, left, right);
 
             quickSort(a, left, pivot - 1);
-            quickSort(a, pivot, right);
+            quickSort(a, pivot +1, right);
         }
     }
 
@@ -21,11 +21,9 @@ public class QuickSort {
 
         pivot = a[(left + right) / 2];
         while (left <= right) {
-            while (a[left].compareTo(pivot) < 0)
-                left++;
+            while (a[left].compareTo(pivot) < 0) left++;
 
-            while (right >= left && a[right].compareTo(pivot) > 0)
-                right--;
+            while (right >= left && a[right].compareTo(pivot) > 0) right--;
 
             if (left <= right) {
                 swap(a, left, right);
