@@ -13,7 +13,7 @@ public class Quotient extends CompoundExpression {
     }
 
     @Override
-    public String toString(){
-        return "(" +  this.e1.toString() + " / "+ this.e2.toString() +")";
+    public String toString() {
+        return "(" + this.e1.toString() + " / " + this.e2.toString() + ")";
     }
 }

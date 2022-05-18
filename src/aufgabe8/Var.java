@@ -24,7 +24,7 @@ public class Var implements Expression {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return variable;
     }
 }

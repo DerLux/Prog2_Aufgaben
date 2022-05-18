@@ -21,5 +21,4 @@ public abstract class CompoundExpression implements Expression {
         set.addAll(this.e2.getVars());
         return set;
     }
-
 }
