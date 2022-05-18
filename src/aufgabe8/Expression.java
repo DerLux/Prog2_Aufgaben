@@ -8,7 +8,4 @@ public interface Expression {
     boolean eval(Map<String, Double> varBel);
 
     Set<String> getVars();
-
-    @Override
-    String toString();
 }

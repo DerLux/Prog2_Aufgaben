@@ -3,13 +3,14 @@ package aufgabe8;
 import java.util.Map;
 import java.util.Set;
 
-public class Constant implements Expression{
+public class Constant implements Expression {
     private final double constant;
+
     public Constant(double con) {
         this.constant = con;
     }
 
-    public double getConstant(){
+    public double getConstant() {
         return constant;
     }
 
