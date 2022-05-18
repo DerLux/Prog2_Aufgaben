@@ -1,6 +1,6 @@
 package aufgabe8;
 
-import java.util.Collection;
+import java.util.Set;
 import java.util.Map;
 
 public class Var implements Expression{
@@ -19,7 +19,7 @@ public class Var implements Expression{
     }
 
     @Override
-    public Collection<?> getVars() {
+    public Set<String> getVars() {
         return null;
     }
 }

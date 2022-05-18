@@ -1,7 +1,7 @@
 package aufgabe8;
 
-import java.util.Collection;
 import java.util.Map;
+import java.util.Set;
 
 public class Constant implements Expression{
     private final double constant;
@@ -19,7 +19,7 @@ public class Constant implements Expression{
     }
 
     @Override
-    public Collection<?> getVars() {
+    public Set<String> getVars() {
         return null;
     }
 }

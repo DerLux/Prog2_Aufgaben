@@ -1,13 +1,13 @@
 package aufgabe8;
 
-import java.util.Collection;
 import java.util.Map;
+import java.util.Set;
 
 public interface Expression {
 
     boolean eval(Map<String, Double> varBel);
 
-    Collection<?> getVars();
+    Set<String> getVars();
 
     @Override
     String toString();
