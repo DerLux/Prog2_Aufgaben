@@ -3,7 +3,7 @@ package aufgabe8;
 import java.util.Map;
 import java.util.Set;
 
-public abstract class CompoundExpression implements Expression {
+public class CompoundExpression implements Expression {
     final Expression e1;
     final Expression e2;
 
