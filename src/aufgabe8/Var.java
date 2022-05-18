@@ -2,6 +2,7 @@ package aufgabe8;
 
 import java.util.Set;
 import java.util.Map;
+import java.util.TreeSet;
 
 public class Var implements Expression {
     private final String variable;
@@ -10,17 +11,20 @@ public class Var implements Expression {
         this.variable = var;
     }
 
-    public String getVariable() {
-        return variable;
-    }
-
     @Override
-    public boolean eval(Map<String, Double> varBel) {
-        return false;
+    public double eval(Map<String, Double> varBel) {
+        return varBel.get(variable);
     }
 
     @Override
     public Set<String> getVars() {
-        return null;
+        Set<String> var = new TreeSet<>();
+        var.add(variable);
+        return var;
+    }
+
+    @Override
+    public String toString(){
+        return variable;
     }
 }

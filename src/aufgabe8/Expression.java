@@ -5,7 +5,10 @@ import java.util.Set;
 
 public interface Expression {
 
-    boolean eval(Map<String, Double> varBel);
+    double eval(Map<String, Double> varBel);
 
     Set<String> getVars();
+
+    @Override
+    String toString();
 }
