@@ -36,8 +36,8 @@ public class ExpressionTreeApplication {
 
         // Evaluiere e1 und e2:
         System.out.println("\n25.0 : "+e1.eval(varBel));  // 25.0
-        System.out.println("\n55.0 : "+e2.eval(varBel));  // 55.0
-        System.out.println("\n5.0 : "+e3.eval(varBel));  // 5.0
+        System.out.println("55.0 : "+e2.eval(varBel));  // 55.0
+        System.out.println("5.0 : "+e3.eval(varBel));  // 5.0
 
         // Alle Variablen in e1:
         System.out.println("\n[a, b] : " + e1.getVars());    // [a, b]

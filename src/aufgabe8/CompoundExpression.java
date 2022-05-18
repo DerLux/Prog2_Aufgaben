@@ -3,7 +3,7 @@ package aufgabe8;
 import java.util.Map;
 import java.util.Set;
 
-public class CompoundExpression implements Expression {
+public abstract class CompoundExpression implements Expression {
     final Expression e1;
     final Expression e2;
 
@@ -13,9 +13,7 @@ public class CompoundExpression implements Expression {
     }
 
     @Override
-    public double eval(Map<String, Double> varBel) {
-        return -2;
-    }
+    public abstract double eval(Map<String, Double> varBel);
 
     @Override
     public Set<String> getVars() {
