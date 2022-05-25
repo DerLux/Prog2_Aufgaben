@@ -2,9 +2,11 @@ package aufgabe9;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class Taschenrechner extends JFrame {
-    private char operator = '+';
+public class Taschenrechner extends JFrame implements ActionListener {
+    private String operator = "+";
 
     JTextField opxTF;
     JTextField opyTF;
@@ -70,21 +72,32 @@ public class Taschenrechner extends JFrame {
         JPanel op = new JPanel(new GridLayout(2,4));
         resetButtons();
         op.add(sumBtn);
+        sumBtn.addActionListener(this);
         sumBtn.setBackground(Color.GREEN);
         op.add(divBtn);
+        divBtn.addActionListener(this);
         op.add(mulBtn);
+        mulBtn.addActionListener(this);
         op.add(quotBtn);
+        quotBtn.addActionListener(this);
         op.add(sinBtn);
+        sinBtn.addActionListener(this);
         op.add(cosBtn);
+        cosBtn.addActionListener(this);
         op.add(sqrBtn);
+        sqrBtn.addActionListener(this);
         op.add(logBtn);
+        logBtn.addActionListener(this);
         //op.setBorder(BorderFactory.createLineBorder(Color.black));
 
         //Programm-Optionen Panel
         JPanel progOpt = new JPanel(new FlowLayout());
         progOpt.add(clearBtn);
+        clearBtn.addActionListener(this);
         progOpt.add(pushmeBtn);
+        pushmeBtn.addActionListener(this);
         progOpt.add(exitBtn);
+        exitBtn.addActionListener(this);
 
         //panels zusammenbauen + padding
         JPanel panel = new JPanel();
@@ -117,7 +130,47 @@ public class Taschenrechner extends JFrame {
         resTF.setText("Bitte gebe Werte ein");
     }
 
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        Object source = e.getSource();
+
+        if(source == sumBtn) {
+            operator = "+";
+            resetButtons();
+            sumBtn.setBackground(Color.GREEN);
+        } else if (source == divBtn){
+            operator = "-";
+            resetButtons();
+            divBtn.setBackground(Color.GREEN);
+        } else if (source == mulBtn){
+            operator = "*";
+            resetButtons();
+            mulBtn.setBackground(Color.GREEN);
+        } else if (source == quotBtn){
+            operator = "/";
+            resetButtons();
+            quotBtn.setBackground(Color.GREEN);
+        } else if (source == sinBtn){
+            operator = "sin";
+            resetButtons();
+            sinBtn.setBackground(Color.GREEN);
+        } else if (source == cosBtn){
+            operator = "cos";
+            resetButtons();
+            cosBtn.setBackground(Color.GREEN);
+        } else if (source == sqrBtn){
+            operator = "sqrt";
+            resetButtons();
+            sqrBtn.setBackground(Color.GREEN);
+        } else if (source == logBtn){
+            operator = "tan";
+            resetButtons();
+            logBtn.setBackground(Color.GREEN);
+        }
+    }
+
     public static void main(String[ ] args) {
         JFrame myApp = new Taschenrechner();
     }
+
 }
