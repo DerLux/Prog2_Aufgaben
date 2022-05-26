@@ -1,11 +1,14 @@
 package aufgabe9;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Taschenrechner extends JFrame implements ActionListener {
+    private static JFrame myApp;
     private String operator = "+";
 
     JTextField opxTF;
@@ -26,11 +29,29 @@ public class Taschenrechner extends JFrame implements ActionListener {
     JButton logBtn = new JButton("log2");
 
     JButton clearBtn = new JButton("clear");
-    JButton pushmeBtn = new JButton("Drück mich");
+    JButton pushMeBtn = new JButton("Drück mich");
     JButton exitBtn = new JButton("Exit");
 
 
     public Taschenrechner () {
+        //Dokument Listener for calculate
+        DocumentListener calculate = new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                calculate();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                calculate();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                calculate();
+            }
+        };
+
         this.setTitle("Taschenrechner");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -39,7 +60,9 @@ public class Taschenrechner extends JFrame implements ActionListener {
         JLabel opyLbl = new JLabel("Operand y");
         JLabel resLbl = new JLabel("Ergebnis");
         opxTF = new JTextField(20);
+        opxTF.getDocument().addDocumentListener(calculate);
         opyTF = new JTextField(20);
+        opyTF.getDocument().addDocumentListener(calculate);
         resTF = new JTextField(20);
         resetResult();
         resTF.setEditable(false);
@@ -94,8 +117,8 @@ public class Taschenrechner extends JFrame implements ActionListener {
         JPanel progOpt = new JPanel(new FlowLayout());
         progOpt.add(clearBtn);
         clearBtn.addActionListener(this);
-        progOpt.add(pushmeBtn);
-        pushmeBtn.addActionListener(this);
+        progOpt.add(pushMeBtn);
+        pushMeBtn.addActionListener(this);
         progOpt.add(exitBtn);
         exitBtn.addActionListener(this);
 
@@ -115,7 +138,51 @@ public class Taschenrechner extends JFrame implements ActionListener {
         this.setVisible(true);
     }
 
-    private void resetButtons() {
+    private void calculate() {
+        //replace , to .
+        String x_str = opxTF.getText().replace(',', '.');
+        String y_str = opyTF.getText().replace(',', '.');
+
+        if (x_str.equals("") && y_str.equals("")) { //if both empty -> return
+            resetResult();
+            return;
+        }
+
+        double x;
+        double y;
+        if(x_str.equals(""))
+            x = 0.0;
+        else
+            x = Double.parseDouble(x_str);
+
+        if(y_str.equals(""))
+            y = 0.0;
+        else
+            y = Double.parseDouble(y_str);
+
+        switch (operator) {
+            case "+" -> resTF.setText(String.valueOf(x+y));
+            case "-" -> resTF.setText(String.valueOf(x-y));
+            case "*" -> resTF.setText(String.valueOf(x*y));
+            case "/" -> {
+                if(y == 0) { //Error, teilen durch 0 nicht möglich
+                    if (y_str.equals("")) { //wenn y leer → wird wie 0 interpretiert
+                        resTF.setText("gebe einen Wert für Y ein");
+                    }
+                    else {
+                        resTF.setText("durch 0 kann nicht geteilt werden");
+                    }
+                } else
+                    resTF.setText(String.valueOf(x/y));
+            }
+            case "sin" -> resTF.setText(String.valueOf("nicht unterstützte Operation"));
+            case "cos" -> resTF.setText(String.valueOf("nicht unterstützte Operation"));
+            case "sqrt" -> resTF.setText(String.valueOf("nicht unterstützte Operation"));
+            case "log" -> resTF.setText(String.valueOf("nicht unterstützte Operation"));
+        }
+    }
+
+    private void resetButtons() { //Buttons auf Cyan + result zurücksetzten
         sumBtn.setBackground(Color.CYAN);
         divBtn.setBackground(Color.CYAN);
         mulBtn.setBackground(Color.CYAN);
@@ -124,6 +191,7 @@ public class Taschenrechner extends JFrame implements ActionListener {
         cosBtn.setBackground(Color.CYAN);
         sqrBtn.setBackground(Color.CYAN);
         logBtn.setBackground(Color.CYAN);
+        calculate();
     }
 
     private void resetResult() {
@@ -163,14 +231,25 @@ public class Taschenrechner extends JFrame implements ActionListener {
             resetButtons();
             sqrBtn.setBackground(Color.GREEN);
         } else if (source == logBtn){
-            operator = "tan";
+            operator = "log";
             resetButtons();
             logBtn.setBackground(Color.GREEN);
+        } else if(source == clearBtn) {
+            opxTF.setText("");
+            opyTF.setText("");
+            resetResult();
+        } else if(source == pushMeBtn) {
+            JOptionPane.showMessageDialog(
+                    myApp,
+                    "Hast du nichts besseres zu tun?"
+            );
+        } else if(source == exitBtn) {
+            System.exit(0);
         }
     }
 
     public static void main(String[ ] args) {
-        JFrame myApp = new Taschenrechner();
+        myApp = new Taschenrechner();
     }
 
 }
