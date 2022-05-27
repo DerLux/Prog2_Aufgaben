@@ -7,6 +7,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class Taschenrechner extends JFrame implements ActionListener {
     private static JFrame myApp;
     private String operator = "+";
@@ -148,6 +151,22 @@ public class Taschenrechner extends JFrame implements ActionListener {
             return;
         }
 
+        if(!inputIsValid(x_str)) {
+            opxTF.setForeground(Color.red);
+            resTF.setText("Operator X ist ungültig");
+            return;
+        } else {
+            opxTF.setForeground(Color.black);
+        }
+
+        if(!inputIsValid(y_str)) {
+            opyTF.setForeground(Color.red);
+            resTF.setText("Operator Y ist ungültig");
+            return;
+        } else {
+            opyTF.setForeground(Color.black);
+        }
+
         double x;
         double y;
         if(x_str.equals(""))
@@ -180,6 +199,23 @@ public class Taschenrechner extends JFrame implements ActionListener {
             case "sqrt" -> resTF.setText(String.valueOf("nicht unterstützte Operation"));
             case "log" -> resTF.setText(String.valueOf("nicht unterstützte Operation"));
         }
+    }
+
+    private boolean inputIsValid(String input) { //return true, if input is numeric or empty (accept , and .)
+        return Pattern.matches("|(\\d+((,|.)\\d+)?)",input);
+
+//        if (input == null) {
+//            return false;
+//        }
+//        if(input.equals("")) {
+//            return true;
+//        }
+//        try {
+//            double d = Double.parseDouble(input);
+//        } catch (NumberFormatException nfe) {
+//            return false;
+//        }
+//        return true;
     }
 
     private void resetButtons() { //Buttons auf Cyan + result zurücksetzten
