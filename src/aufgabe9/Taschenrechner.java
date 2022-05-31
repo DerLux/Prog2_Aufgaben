@@ -1,5 +1,3 @@
-//Zeilen 76,93,103
-
 package aufgabe9;
 
 import javax.swing.*;
