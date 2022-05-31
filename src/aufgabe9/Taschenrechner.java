@@ -37,7 +37,7 @@ public class Taschenrechner extends JFrame implements ActionListener {
 
     JRadioButton degRBtn = new JRadioButton("Deg", true);
     JRadioButton radRBtn = new JRadioButton("Rad");
-    JCheckBox theme = new JCheckBox("Dark Mode", false);
+    JCheckBox theme = new JCheckBox("Dark Mode", true);
 
     JButton sumBtn = new JButton("+");
     JButton divBtn = new JButton("-");
@@ -130,15 +130,16 @@ public class Taschenrechner extends JFrame implements ActionListener {
         resetButtons();
         op.add(sumBtn);
         sumBtn.addActionListener(this);
-        sumBtn.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
-        sumBtn.setBackground(Color.GREEN);
+        sumBtn.setBorder(BorderFactory.createLineBorder(selected,2));
+        //sumBtn.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
         op.add(divBtn);
         divBtn.addActionListener(this);
-        divBtn.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+        //divBtn.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
         op.add(mulBtn);
         mulBtn.addActionListener(this);
         op.add(quotBtn);
-        mulBtn.setBorder(BorderFactory.createLineBorder(Color.black,5));
+        //mulBtn.setBorder(BorderFactory.createLineBorder(Color.black,0));
+
         quotBtn.addActionListener(this);
         op.add(sinBtn);
         sinBtn.addActionListener(this);
@@ -175,12 +176,16 @@ public class Taschenrechner extends JFrame implements ActionListener {
         this.pack();
         //this.setResizable(false);
         this.setVisible(true);
+        resetBorder();
+        sumBtn.setBorder(BorderFactory.createLineBorder(selected,2));
+        darkMode(Color.YELLOW,Color.BLACK,Color.DARK_GRAY);
+
     }
 
     private void calculate() {
         //reset input background
-        opxTF.setForeground(Color.black);
-        opyTF.setForeground(Color.black);
+        opxTF.setForeground(textColor);
+        opyTF.setForeground(textColor);
 
         //replace , to .
         String x_str = opxTF.getText().replace(',', '.');
@@ -193,13 +198,13 @@ public class Taschenrechner extends JFrame implements ActionListener {
 
         if(!inputIsValid(x_str)) {
             opxTF.setForeground(Color.red);
-            resTF.setText("Operator X ist ungültig");
+            resTF.setText("Nene, soo nicht!");
             return;
         }
 
         if(!inputIsValid(y_str)) {
             opyTF.setForeground(Color.red);
-            resTF.setText("Operator Y ist ungültig");
+            resTF.setText("Nene, so nicht!");
             return;
         }
 
@@ -313,7 +318,7 @@ public class Taschenrechner extends JFrame implements ActionListener {
     }
 
     private void resetResult() {
-        resTF.setText("Bitte gebe Werte ein");
+        resTF.setText("Können wir jetzt endlich was rechnen?");
     }
 
     @Override
@@ -323,41 +328,46 @@ public class Taschenrechner extends JFrame implements ActionListener {
         if(source == sumBtn) {
             operator = "+";
             resetButtons();
-            sumBtn.setBackground(Color.GREEN);
+            resetBorder();
+            sumBtn.setBorder(BorderFactory.createLineBorder(selected,2));
         } else if (source == divBtn){
             operator = "-";
             resetButtons();
-            divBtn.setBackground(Color.GREEN);
+            resetBorder();
+            divBtn.setBorder(BorderFactory.createLineBorder(selected,2));
         } else if (source == mulBtn){
             operator = "*";
             resetButtons();
-            mulBtn.setBackground(Color.GREEN);
+            resetBorder();
+            mulBtn.setBorder(BorderFactory.createLineBorder(selected,2));
         } else if (source == quotBtn){
             operator = "/";
             resetButtons();
-            quotBtn.setBackground(Color.GREEN);
+            resetBorder();
+            quotBtn.setBorder(BorderFactory.createLineBorder(selected,2));
         } else if (source == sinBtn){
             operator = "sin";
             resetButtons();
             resetBorder();
             setYInputInactive();
-            sinBtn.setBackground(Color.GREEN);
+            sinBtn.setBorder(BorderFactory.createLineBorder(selected,2));
         } else if (source == cosBtn){
             operator = "cos";
             resetButtons();
             resetBorder();
             setYInputInactive();
-            cosBtn.setBackground(Color.GREEN);
+            cosBtn.setBorder(BorderFactory.createLineBorder(selected,2));
         } else if (source == sqrBtn){
             operator = "sqrt";
             resetButtons();
-            sqrBtn.setBackground(Color.GREEN);
+            resetBorder();
+            sqrBtn.setBorder(BorderFactory.createLineBorder(selected,2));
         } else if (source == logBtn){
             operator = "log";
             resetButtons();
             resetBorder();
             setYInputInactive();
-            logBtn.setBackground(Color.GREEN);
+            logBtn.setBorder(BorderFactory.createLineBorder(selected,2));
         } else if(source == degRBtn) {
             resetBorder();
             calculate();
