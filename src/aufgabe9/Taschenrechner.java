@@ -1,3 +1,5 @@
+//Zeilen 76,93,103
+
 package aufgabe9;
 
 import javax.swing.*;
@@ -13,9 +15,25 @@ public class Taschenrechner extends JFrame implements ActionListener {
     private static JFrame myApp;
     private String operator = "+";
 
+    private Color textColor = Color.black;
+    private Color buttonColor = Color.lightGray;
+    private static final Color selected = new Color(0xDA48E0);
+    private static final Color buttonBorder = new Color(0x19c5cf);
+
+    JPanel text;
+    ButtonGroup group;
+    JPanel einstellungen;
+    JPanel op;
+    JPanel progOpt;
+    JPanel panel;
+
     JTextField opxTF;
     JTextField opyTF;
     JTextField resTF;
+
+    JLabel opxLbl;
+    JLabel opyLbl;
+    JLabel resLbl;
 
     JRadioButton degRBtn = new JRadioButton("Deg", true);
     JRadioButton radRBtn = new JRadioButton("Rad");
@@ -55,22 +73,28 @@ public class Taschenrechner extends JFrame implements ActionListener {
         };
 
         this.setTitle("Taschenrechner");
+        this.setOpacity(1.0f);
+        this.getContentPane().setBackground(Color.LIGHT_GRAY);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // Ein-/Ausgabe components
-        JLabel opxLbl = new JLabel("Operand x");
-        JLabel opyLbl = new JLabel("Operand y");
-        JLabel resLbl = new JLabel("Ergebnis");
+        opxLbl = new JLabel("Operand x");
+        opyLbl = new JLabel("Operand y");
+        resLbl = new JLabel("Ergebnis");
         opxTF = new JTextField(24);
+        opxTF.setOpaque(true);
         opxTF.getDocument().addDocumentListener(calculate);
         opyTF = new JTextField(24);
+        opyTF.setOpaque(true);
         opyTF.getDocument().addDocumentListener(calculate);
         resTF = new JTextField(24);
         resetResult();
+        resTF.setOpaque(true);
         resTF.setEditable(false);
 
         // Ein-/Ausgabe Panel
-        JPanel text = new JPanel(new GridLayout(3,2));
+        text = new JPanel(new GridLayout(3,2));
+        text.setOpaque(true);
         text.add(opxLbl);
         text.add(opxTF);
         text.add(opyLbl);
@@ -82,21 +106,27 @@ public class Taschenrechner extends JFrame implements ActionListener {
         //text.setBorder(BorderFactory.createLineBorder(Color.black));
 
         // Button Group Radio-Buttons
-        ButtonGroup group = new ButtonGroup();
+        group = new ButtonGroup();
         group.add(degRBtn);
         group.add(radRBtn);
 
         // Einstellungen Panel
-        JPanel einstellungen = new JPanel(new FlowLayout());
+        einstellungen = new JPanel(new FlowLayout());
+        einstellungen.setOpaque(true);
         einstellungen.add(degRBtn);
         degRBtn.addActionListener(this);
+        degRBtn.setOpaque(true);
         einstellungen.add(radRBtn);
         radRBtn.addActionListener(this);
+        radRBtn.setOpaque(true);
         einstellungen.add(theme);
+        theme.addActionListener(this);
+        theme.setOpaque(true);
         einstellungen.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
 
         //Operations Panel
-        JPanel op = new JPanel(new GridLayout(2,4));
+        op = new JPanel(new GridLayout(2,4));
+        op.setOpaque(true);
         resetButtons();
         op.add(sumBtn);
         sumBtn.addActionListener(this);
@@ -121,7 +151,8 @@ public class Taschenrechner extends JFrame implements ActionListener {
         //op.setBorder(BorderFactory.createLineBorder(Color.black));
 
         //Programm-Optionen Panel
-        JPanel progOpt = new JPanel(new FlowLayout());
+        progOpt = new JPanel(new FlowLayout());
+        progOpt.setOpaque(true);
         progOpt.add(clearBtn);
         clearBtn.addActionListener(this);
         progOpt.add(pushMeBtn);
@@ -130,7 +161,8 @@ public class Taschenrechner extends JFrame implements ActionListener {
         exitBtn.addActionListener(this);
 
         //panels zusammenbauen + padding
-        JPanel panel = new JPanel();
+        panel = new JPanel();
+        panel.setOpaque(true);
         panel.setLayout(new BoxLayout(panel,BoxLayout.Y_AXIS));
         panel.add(text);
         panel.add(einstellungen);
@@ -259,16 +291,24 @@ public class Taschenrechner extends JFrame implements ActionListener {
         return Pattern.matches("|(-*\\d+((,|.)\\d+)?)",input);
     }
 
-    private void resetButtons() { //Buttons auf Cyan + activate opyTF + result zurücksetzten
+    private void resetButtons() { //Buttons auf buttonColor + activate opyTF + result zurücksetzten
         opyTF.setEditable(true);
-        sumBtn.setBackground(Color.CYAN);
-        divBtn.setBackground(Color.CYAN);
-        mulBtn.setBackground(Color.CYAN);
-        quotBtn.setBackground(Color.CYAN);
-        sinBtn.setBackground(Color.CYAN);
-        cosBtn.setBackground(Color.CYAN);
-        sqrBtn.setBackground(Color.CYAN);
-        logBtn.setBackground(Color.CYAN);
+        sumBtn.setBackground(buttonColor);
+        sumBtn.setForeground(textColor);
+        divBtn.setBackground(buttonColor);
+        divBtn.setForeground(textColor);
+        mulBtn.setBackground(buttonColor);
+        mulBtn.setForeground(textColor);
+        quotBtn.setBackground(buttonColor);
+        quotBtn.setForeground(textColor);
+        sinBtn.setBackground(buttonColor);
+        sinBtn.setForeground(textColor);
+        cosBtn.setBackground(buttonColor);
+        cosBtn.setForeground(textColor);
+        sqrBtn.setBackground(buttonColor);
+        sqrBtn.setForeground(textColor);
+        logBtn.setBackground(buttonColor);
+        logBtn.setForeground(textColor);
         calculate();
     }
 
@@ -299,11 +339,13 @@ public class Taschenrechner extends JFrame implements ActionListener {
         } else if (source == sinBtn){
             operator = "sin";
             resetButtons();
+            resetBorder();
             setYInputInactive();
             sinBtn.setBackground(Color.GREEN);
         } else if (source == cosBtn){
             operator = "cos";
             resetButtons();
+            resetBorder();
             setYInputInactive();
             cosBtn.setBackground(Color.GREEN);
         } else if (source == sqrBtn){
@@ -313,11 +355,14 @@ public class Taschenrechner extends JFrame implements ActionListener {
         } else if (source == logBtn){
             operator = "log";
             resetButtons();
+            resetBorder();
             setYInputInactive();
             logBtn.setBackground(Color.GREEN);
         } else if(source == degRBtn) {
+            resetBorder();
             calculate();
         } else if(source == radRBtn) {
+            resetBorder();
             calculate();
         } else if(source == clearBtn) {
             opxTF.setText("");
@@ -330,7 +375,56 @@ public class Taschenrechner extends JFrame implements ActionListener {
             );
         } else if(source == exitBtn) {
             System.exit(0);
+        } else if(source == theme){
+            if(theme.isSelected()){
+                darkMode(Color.YELLOW,Color.BLACK,Color.DARK_GRAY);
+            } else {
+                darkMode(Color.BLACK,Color.WHITE,Color.LIGHT_GRAY);
+            }
         }
+    }
+
+    private void darkMode(Color fore, Color back, Color button){
+        textColor = fore;
+        buttonColor = button;
+        resetButtons();
+        resTF.setForeground(fore);
+
+        this.getContentPane().setBackground(back);
+        text.setBackground(back);
+        einstellungen.setBackground(back);
+        op.setBackground(back);
+        progOpt.setBackground(back);
+        opxTF.setBackground(back);
+        //opxTF.setForeground(fore);
+        opyTF.setBackground(back);
+        resTF.setBackground(back);
+        theme.setBackground(back);
+        theme.setForeground(fore);
+        radRBtn.setBackground(back);
+        radRBtn.setForeground(fore);
+        degRBtn.setBackground(back);
+        degRBtn.setForeground(fore);
+        opxLbl.setForeground(fore);
+        opyLbl.setForeground(fore);
+        resLbl.setForeground(fore);
+        clearBtn.setBackground(button);
+        clearBtn.setForeground(fore);
+        exitBtn.setBackground(button);
+        exitBtn.setForeground(fore);
+        pushMeBtn.setBackground(button);
+        pushMeBtn.setForeground(fore);
+    }
+
+    private void resetBorder(){
+        sumBtn.setBorder(BorderFactory.createLineBorder(buttonBorder,1));
+        divBtn.setBorder(BorderFactory.createLineBorder(buttonBorder,1));
+        mulBtn.setBorder(BorderFactory.createLineBorder(buttonBorder,1));
+        quotBtn.setBorder(BorderFactory.createLineBorder(buttonBorder,1));
+        sinBtn.setBorder(BorderFactory.createLineBorder(buttonBorder,1));
+        cosBtn.setBorder(BorderFactory.createLineBorder(buttonBorder,1));
+        sqrBtn.setBorder(BorderFactory.createLineBorder(buttonBorder,1));
+        logBtn.setBorder(BorderFactory.createLineBorder(buttonBorder,1));
     }
 
     private void setYInputInactive() {
