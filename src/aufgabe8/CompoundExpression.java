@@ -12,8 +12,8 @@ public abstract class CompoundExpression implements Expression {
         this.e2 = e2;
     }
 
-    @Override
-    public abstract double eval(Map<String, Double> varBel);
+//    @Override
+//    public abstract double eval(Map<String, Double> varBel);
 
     @Override
     public Set<String> getVars() {

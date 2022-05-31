@@ -35,22 +35,22 @@ public class ExpressionTreeApplication {
         varBel.put("n", 10.0);
 
         // Evaluiere e1 und e2:
-        System.out.println("\n25.0 : "+e1.eval(varBel));  // 25.0
-        System.out.println("55.0 : "+e2.eval(varBel));  // 55.0
-        System.out.println("5.0 : "+e3.eval(varBel));  // 5.0
+        System.out.println("\n25.0 : "+e1.eval(varBel));    // 25.0
+        System.out.println("55.0 : "+e2.eval(varBel));      // 55.0
+        System.out.println("5.0 : "+e3.eval(varBel));       // 5.0
 
         // Alle Variablen in e1:
-        System.out.println("\n[a, b] : " + e1.getVars());    // [a, b]
-        System.out.println("[n] : " + e2.getVars());    // [n]
-        System.out.println("[a, b, c] : " + e3.getVars());    // [a, b, c]
-        System.out.println("[a, b, c] : " + e4.getVars());    // [a, b, c]
+        System.out.println("\n[a, b] : " + e1.getVars());       // [a, b]
+        System.out.println("[n] : " + e2.getVars());            // [n]
+        System.out.println("[a, b, c] : " + e3.getVars());      // [a, b, c]
+        System.out.println("[a, b, c] : " + e4.getVars());      // [a, b, c]
 
         // Prüfe, ob alle Variablen in e1 belegt sind:
         System.out.println("\ntrue : " + varBel.keySet().containsAll(e1.getVars()));    // true
 
         // e1 und e2 ausgeben (überschriebene toString-Methode):
-        System.out.println("\n"+e1);        // ((a * a) + (b * b))
-        System.out.println(e2);        // ((n * (n + 1.0)) / 2.0)
-        System.out.println(e3);        // (((a + b) + c) / 3.0)
+        System.out.println("\n"+e1);    // ((a * a) + (b * b))
+        System.out.println(e2);         // ((n * (n + 1.0)) / 2.0)
+        System.out.println(e3);         // (((a + b) + c) / 3.0)
     }
 }
