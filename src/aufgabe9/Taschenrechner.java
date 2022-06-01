@@ -413,14 +413,9 @@ public class Taschenrechner extends JFrame implements ActionListener {
     }
 
     private void resetBorder() {
-        sumBtn.setBorder(BorderFactory.createLineBorder(buttonBorder, 1));
-        divBtn.setBorder(BorderFactory.createLineBorder(buttonBorder, 1));
-        mulBtn.setBorder(BorderFactory.createLineBorder(buttonBorder, 1));
-        quotBtn.setBorder(BorderFactory.createLineBorder(buttonBorder, 1));
-        sinBtn.setBorder(BorderFactory.createLineBorder(buttonBorder, 1));
-        cosBtn.setBorder(BorderFactory.createLineBorder(buttonBorder, 1));
-        sqrBtn.setBorder(BorderFactory.createLineBorder(buttonBorder, 1));
-        logBtn.setBorder(BorderFactory.createLineBorder(buttonBorder, 1));
+        for (JButton jButton : Arrays.asList(sumBtn, divBtn, mulBtn, quotBtn, sinBtn, cosBtn, sqrBtn, logBtn)) {
+            jButton.setBorder(BorderFactory.createLineBorder(buttonBorder, 1));
+        }
     }
 
     private void setYInputInactive() {

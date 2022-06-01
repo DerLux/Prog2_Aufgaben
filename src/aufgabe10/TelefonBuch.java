@@ -1,7 +1,4 @@
-// O. Bittel
-// 10.03.2017
-
-package Aufgabe11TelefonBuch;
+package aufgabe10;
 
 import java.util.Map.Entry;
 import java.util.TreeMap;
