@@ -7,6 +7,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import java.util.Arrays;
 import java.util.regex.Pattern;
 
 public class Taschenrechner extends JFrame implements ActionListener {
@@ -66,7 +67,7 @@ public class Taschenrechner extends JFrame implements ActionListener {
 
             @Override
             public void changedUpdate(DocumentEvent e) {
-                //calculate();
+                calculate();
             }
         };
 
@@ -284,22 +285,10 @@ public class Taschenrechner extends JFrame implements ActionListener {
 
     private void resetButtons() { //Buttons auf buttonColor + activate opyTF + result zurücksetzten
         opyTF.setEditable(true);
-        sumBtn.setBackground(buttonColor);
-        sumBtn.setForeground(textColor);
-        divBtn.setBackground(buttonColor);
-        divBtn.setForeground(textColor);
-        mulBtn.setBackground(buttonColor);
-        mulBtn.setForeground(textColor);
-        quotBtn.setBackground(buttonColor);
-        quotBtn.setForeground(textColor);
-        sinBtn.setBackground(buttonColor);
-        sinBtn.setForeground(textColor);
-        cosBtn.setBackground(buttonColor);
-        cosBtn.setForeground(textColor);
-        sqrBtn.setBackground(buttonColor);
-        sqrBtn.setForeground(textColor);
-        logBtn.setBackground(buttonColor);
-        logBtn.setForeground(textColor);
+        for (JButton jButton : Arrays.asList(sumBtn, divBtn, mulBtn, quotBtn, sinBtn, cosBtn, sqrBtn, logBtn)) {
+            jButton.setBackground(buttonColor);
+            jButton.setForeground(textColor);
+        }
         calculate();
     }
 
