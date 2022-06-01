@@ -33,17 +33,17 @@ public class TelefonBuchGUI extends JFrame {
         // Input Panels erstellen:
         JPanel inputLBPanel = new JPanel(new GridLayout(3, 1));
         JPanel inputTFPanel = new JPanel(new GridLayout(3, 1));
-        JPanel inputBTPanel = new JPanel(new FlowLayout());
+        JPanel inputBTPanel = new JPanel(new FlowLayout(FlowLayout.LEADING,5,2));
 
         // Input Labels erstellen:
         JLabel nameLB = new JLabel("Name:");
         JLabel extraLB = new JLabel("Zusatz:");
-        JLabel numberLB = new JLabel("Tel:");
+        JLabel numberLB = new JLabel("Telefonnummer:");
 
         // Input Textfelder erstellen:
-        JTextField nameTF = new JTextField("", 20);
-        JTextField extraTF = new JTextField("", 20);
-        JTextField numberTF = new JTextField("", 20);
+        JTextField nameTF = new JTextField("", 21);
+        JTextField extraTF = new JTextField("", 21);
+        JTextField numberTF = new JTextField("", 21);
 
         // Input Button erstellen & Größe festlegen:
         JButton inputBTN = new JButton("Einfügen");
@@ -71,16 +71,16 @@ public class TelefonBuchGUI extends JFrame {
         // Search Panels erstellen:
         JPanel searchLBPanel = new JPanel(new GridLayout(2, 1));
         JPanel searchTFPanel = new JPanel(new GridLayout(2, 1));
-        JPanel searchBTPanel = new JPanel(new GridLayout(2, 1));
-        JPanel searchPanel = new JPanel(new FlowLayout());
+        JPanel searchBTPanel = new JPanel(new FlowLayout(FlowLayout.TRAILING,3,2));
+        JPanel searchPanel = new JPanel(new FlowLayout(FlowLayout.LEADING,5,2));
 
         // Search Labels erstellen:
         JLabel sNameLB = new JLabel("Name:");
         JLabel sExtraLB = new JLabel("Zusatz:");
 
         // Search Textfelder erstellen:
-        JTextField sNameTF = new JTextField("", 20);
-        JTextField sExtraTF = new JTextField("", 20);
+        JTextField sNameTF = new JTextField("", 16);
+        JTextField sExtraTF = new JTextField("", 16);
 
         // Search Name hinzufügen:
         searchLBPanel.add(sNameLB);
