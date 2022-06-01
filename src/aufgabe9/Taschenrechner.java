@@ -71,7 +71,6 @@ public class Taschenrechner extends JFrame implements ActionListener {
         };
 
         this.setTitle("Taschenrechner");
-        this.setOpacity(1.0f);
         this.getContentPane().setBackground(Color.LIGHT_GRAY);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
