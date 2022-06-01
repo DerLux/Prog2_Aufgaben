@@ -17,7 +17,7 @@ public class TelefonBuchMenuBar
     }
 
     public void actionPerformed(ActionEvent e) {
-        // ...
+        Object source = e.getSource();
     }
 }
 
