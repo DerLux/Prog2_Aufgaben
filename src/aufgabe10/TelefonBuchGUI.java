@@ -6,6 +6,7 @@ import javax.swing.border.TitledBorder;
 import java.awt.*;
 
 public class TelefonBuchGUI extends JFrame {
+    private static JFrame myTelefonBuch = new JFrame();
 
     private TelefonBuch telBuch;
 
@@ -115,7 +116,13 @@ public class TelefonBuchGUI extends JFrame {
         // Sonstige Eigenschaften des Hauptfensters setzen:
         this.setTitle("Telefonbuch");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.add(menuBar);
+        this.setJMenuBar(menuBar);
+        this.add(inputBTPanel);
+        this.add(searchPanel);
+        this.add(outputPanel);
         this.pack();
+        this.setResizable(false);
         this.setVisible(true);
     }
 

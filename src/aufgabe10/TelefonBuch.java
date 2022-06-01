@@ -1,5 +1,6 @@
 package aufgabe10;
 
+import java.util.ArrayList;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 import java.util.LinkedList;
@@ -26,7 +27,7 @@ public class TelefonBuch {
     }
 
     public List<String> prefixSearch(String s) {
-        return null; // damit IDE kein Systaxfehler anzeigt
+        return new ArrayList<String>(); // damit IDE kein Systaxfehler anzeigt
     }
 
     public void read(File f) {
