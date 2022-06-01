@@ -197,13 +197,13 @@ public class Taschenrechner extends JFrame implements ActionListener {
             return;
         }
 
-        if (inputIsValid(x_str)) {
+        if (inputIsInvalid(x_str)) {
             opxTF.setForeground(Color.red);
             resTF.setText("Nene, soo nicht!");
             return;
         }
 
-        if (inputIsValid(y_str)) {
+        if (inputIsInvalid(y_str)) {
             opyTF.setForeground(Color.red);
             resTF.setText("Nene, so nicht!");
             return;
@@ -278,7 +278,7 @@ public class Taschenrechner extends JFrame implements ActionListener {
         }
     }
 
-    private boolean inputIsValid(String input) { //return true, if input is numeric or empty (accept , and .)
+    private boolean inputIsInvalid(String input) { //return false, if input is numeric or empty (accept , and .)
         return !Pattern.matches("|(-*\\d+((,|.)\\d+)?)", input);
     }
 
