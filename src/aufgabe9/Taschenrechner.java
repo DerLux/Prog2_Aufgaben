@@ -44,7 +44,7 @@ public class Taschenrechner extends JFrame implements ActionListener {
     JButton sinBtn = new JButton("sin");
     JButton cosBtn = new JButton("cos");
     JButton sqrBtn = new JButton("x^y");
-    JButton logBtn = new JButton("log2");
+    JButton logBtn = new JButton("<HTML>log<sub>y</sub>(x)</HTML>");
 
     JButton clearBtn = new JButton("clear");
     JButton pushMeBtn = new JButton("Drück mich");
@@ -197,13 +197,13 @@ public class Taschenrechner extends JFrame implements ActionListener {
             return;
         }
 
-        if (!inputIsValid(x_str)) {
+        if (inputIsValid(x_str)) {
             opxTF.setForeground(Color.red);
             resTF.setText("Nene, soo nicht!");
             return;
         }
 
-        if (!inputIsValid(y_str)) {
+        if (inputIsValid(y_str)) {
             opyTF.setForeground(Color.red);
             resTF.setText("Nene, so nicht!");
             return;
@@ -273,13 +273,13 @@ public class Taschenrechner extends JFrame implements ActionListener {
                         resTF.setText("log muss positiv sein");
                         opxTF.setForeground(Color.red);
                     }
-                } else resTF.setText(String.valueOf(Math.log(x)));
+                } else resTF.setText((String.valueOf(Math.log(x) / Math.log(y))));//resTF.setText(String.valueOf(Math.log(x)));
             }
         }
     }
 
     private boolean inputIsValid(String input) { //return true, if input is numeric or empty (accept , and .)
-        return Pattern.matches("|(-*\\d+((,|.)\\d+)?)", input);
+        return !Pattern.matches("|(-*\\d+((,|.)\\d+)?)", input);
     }
 
     private void resetButtons() { //Buttons auf buttonColor + activate opyTF + result zurücksetzten
@@ -352,7 +352,7 @@ public class Taschenrechner extends JFrame implements ActionListener {
             operator = "log";
             resetButtons();
             resetBorder();
-            setYInputInactive();
+            //setYInputInactive();
             logBtn.setBorder(BorderFactory.createLineBorder(selected, 2));
         } else if (source == degRBtn) {
             resetBorder();
@@ -429,5 +429,4 @@ public class Taschenrechner extends JFrame implements ActionListener {
     public static void main(String[] args) {
         myApp = new Taschenrechner();
     }
-
 }
