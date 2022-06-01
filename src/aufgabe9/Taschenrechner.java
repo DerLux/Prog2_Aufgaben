@@ -48,7 +48,7 @@ public class Taschenrechner extends JFrame implements ActionListener {
     JButton logBtn = new JButton("<HTML>log<sub>y</sub>(x)</HTML>");
 
     JButton clearBtn = new JButton("clear");
-    JButton pushMeBtn = new JButton("Drück mich");
+    JButton pushMeBtn = new JButton("Drück mi");
     JButton exitBtn = new JButton("Exit");
 
 
@@ -131,25 +131,34 @@ public class Taschenrechner extends JFrame implements ActionListener {
         resetButtons();
         op.add(sumBtn);
         sumBtn.addActionListener(this);
+        sumBtn.setFocusable(false);
         sumBtn.setBorder(BorderFactory.createLineBorder(selected, 2));
         //sumBtn.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
         op.add(divBtn);
         divBtn.addActionListener(this);
+        divBtn.setFocusable(false);
         //divBtn.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
         op.add(mulBtn);
         mulBtn.addActionListener(this);
+        mulBtn.setFocusable(false);
         op.add(quotBtn);
         //mulBtn.setBorder(BorderFactory.createLineBorder(Color.black,0));
 
         quotBtn.addActionListener(this);
+        quotBtn.setFocusable(false);
         op.add(sinBtn);
         sinBtn.addActionListener(this);
+        sinBtn.setFocusable(false);
         op.add(cosBtn);
         cosBtn.addActionListener(this);
+        cosBtn.setFocusable(false);
         op.add(sqrBtn);
         sqrBtn.addActionListener(this);
+        sqrBtn.setFocusable(false);
         op.add(logBtn);
         logBtn.addActionListener(this);
+        logBtn.setFocusable(false);
+        logBtn.setPreferredSize(new Dimension(100, 25));
         //op.setBorder(BorderFactory.createLineBorder(Color.black));
 
         //Programm-Optionen Panel
@@ -199,13 +208,13 @@ public class Taschenrechner extends JFrame implements ActionListener {
 
         if (inputIsInvalid(x_str)) {
             opxTF.setForeground(Color.red);
-            resTF.setText("Nene, soo nicht!");
+            resTF.setText("Des goht so net!");
             return;
         }
 
         if (inputIsInvalid(y_str)) {
             opyTF.setForeground(Color.red);
-            resTF.setText("Nene, so nicht!");
+            resTF.setText("Nope, so net!");
             return;
         }
 
@@ -267,13 +276,18 @@ public class Taschenrechner extends JFrame implements ActionListener {
             }
             case "log" -> {
                 if (x <= 0) { //Error, x muss > 0 sein
+                    if (y < 0) {
+                        resTF.setText("y darf nicht negativ sein");
+                        opyTF.setForeground(Color.red);
+                    }
                     if (x_str.equals("")) { //wenn x leer → wird wie 0 interpretiert
                         resTF.setText("gebe einen Wert für X ein");
                     } else {
                         resTF.setText("log muss positiv sein");
                         opxTF.setForeground(Color.red);
                     }
-                } else resTF.setText((String.valueOf(Math.log(x) / Math.log(y))));//resTF.setText(String.valueOf(Math.log(x)));
+                } else
+                    resTF.setText((String.valueOf(Math.log(x) / Math.log(y))));//resTF.setText(String.valueOf(Math.log(x)));
             }
         }
     }
