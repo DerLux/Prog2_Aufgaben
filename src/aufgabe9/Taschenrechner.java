@@ -114,12 +114,15 @@ public class Taschenrechner extends JFrame implements ActionListener {
         einstellungen.add(degRBtn);
         degRBtn.addActionListener(this);
         degRBtn.setOpaque(true);
+        degRBtn.setFocusable(false);
         einstellungen.add(radRBtn);
         radRBtn.addActionListener(this);
         radRBtn.setOpaque(true);
+        radRBtn.setFocusable(false);
         einstellungen.add(theme);
         theme.addActionListener(this);
         theme.setOpaque(true);
+        theme.setFocusable(false);
         einstellungen.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
         //Operations Panel
@@ -386,8 +389,9 @@ public class Taschenrechner extends JFrame implements ActionListener {
         op.setBackground(back);
         progOpt.setBackground(back);
         opxTF.setBackground(back);
-        //opxTF.setForeground(fore);
+        opxTF.setCaretColor(fore);
         opyTF.setBackground(back);
+        opyTF.setCaretColor(fore);
         resTF.setBackground(back);
         theme.setBackground(back);
         theme.setForeground(fore);
