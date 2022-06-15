@@ -4,15 +4,28 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
 
-public class TelefonBuchGUI extends JFrame {
-    private static final JFrame myTelefonBuch = new JFrame();
+public class TelefonBuchGUI extends JFrame implements ActionListener {
+    public static final JFrame myTelefonBuch = new JFrame();
 
     private TelefonBuch telBuch;
+
+    private JFileChooser fc = new JFileChooser();
+
+
+
+    private JMenuItem menuRead;
+    private JMenuItem menuSave;
+    private JMenuItem menuEnd;
+
 
     public TelefonBuchGUI() {
         // TelefonBuch anlegen:
         telBuch = new TelefonBuch();
+
 
         // Menüleiste einbauen:
         JMenuBar menuBar = new JMenuBar();
@@ -21,52 +34,18 @@ public class TelefonBuchGUI extends JFrame {
 
         // Menüleiste hinzufügen & Unterpunkte erstellen
         menuBar.add(menuFile);
-        JMenuItem menuRead = new JMenuItem("Telefonbuch lesen");
-        JMenuItem menuSave = new JMenuItem("Telefonbuch speichern");
-        JMenuItem menuEnd = new JMenuItem("Telefonbuch beenden");
+        menuRead = new JMenuItem("Telefonbuch lesen");
+        menuRead.addActionListener(this);
+        menuSave = new JMenuItem("Telefonbuch speichern");
+        menuSave.addActionListener(this);
+        menuEnd = new JMenuItem("Telefonbuch beenden");
+        menuEnd.addActionListener(this);
 
         // Menü-Unterpunkte hinzufügen:
         menuFile.add(menuRead);
         menuFile.add(menuSave);
         menuFile.add(menuEnd);
 
-        // Input Panels erstellen:
-        JPanel inputLBPanel = new JPanel(new GridLayout(3, 1));
-        JPanel inputTFPanel = new JPanel(new GridLayout(3, 1));
-        JPanel inputBTPanel = new JPanel(new FlowLayout(FlowLayout.LEADING,5,2));
-
-        // Input Labels erstellen:
-        JLabel nameLB = new JLabel("Name:");
-        JLabel extraLB = new JLabel("Zusatz:");
-        JLabel numberLB = new JLabel("Telefonnummer:");
-
-        // Input Textfelder erstellen:
-        JTextField nameTF = new JTextField("", 21);
-        JTextField extraTF = new JTextField("", 21);
-        JTextField numberTF = new JTextField("", 21);
-
-        // Input Button erstellen & Größe festlegen:
-        JButton inputBTN = new JButton("Einfügen");
-        inputBTN.setPreferredSize(new Dimension(100, 25));
-
-        // Input Labels hinzufügen:
-        inputLBPanel.add(nameLB);
-        inputLBPanel.add(extraLB);
-        inputLBPanel.add(numberLB);
-
-        // Input Textfelder hinzufügen:
-        inputTFPanel.add(nameTF);
-        inputTFPanel.add(extraTF);
-        inputTFPanel.add(numberTF);
-
-        // Input Buttons hinzufügen:
-        inputBTPanel.add(inputLBPanel);
-        inputBTPanel.add(inputTFPanel);
-        inputBTPanel.add(inputBTN);
-
-        // Input Umrahmung erstellen:
-        inputBTPanel.setBorder(new EmptyBorder(1, 1, 1, 1));
-        inputBTPanel.setBorder(new TitledBorder("Einfügen"));
 
         // Search Panels erstellen:
         JPanel searchLBPanel = new JPanel(new GridLayout(2, 1));
@@ -123,14 +102,18 @@ public class TelefonBuchGUI extends JFrame {
         JPanel mainPanel = new JPanel();
         mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
+        //mainPanel.add(new TelefonBuchEinfuegenPanel(telBuch));
         this.setContentPane(mainPanel);
 
         // Hauptfenster zusammenbauen:
         this.setTitle("Telefonbuch");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //mainPanel.add(new TelefonBuchMenuBar(telBuch));
+
         this.add(menuBar);
         this.setJMenuBar(menuBar);
-        this.add(inputBTPanel);
+        //mainPanel.add(new TelefonBuchEinfuegenPanel(telBuch));
+        //mainPanel.add(new TelefonBuchSuchenLoeschenPanel(telBuch));
         this.add(searchPanel);
         this.add(outputPanel);
         this.pack();
@@ -139,5 +122,29 @@ public class TelefonBuchGUI extends JFrame {
     }
     public static void main(String[] args) {
         new TelefonBuchGUI();
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        Object source = e.getSource();
+
+        if (source == menuRead) {
+            int returnVal = fc.showOpenDialog(this);
+            if (returnVal == JFileChooser.APPROVE_OPTION) {
+                File file = fc.getSelectedFile();
+                System.out.println("Opening: " + file.getName() + ".\n");
+                telBuch.read(file);
+                //System.out.println(telBuch);
+            } else {
+                System.out.println("Open command cancelled by user.\n");
+                //text.append("Open command cancelled by user.\n");
+            }
+            //text.setCaretPosition(text.getDocument().getLength());
+
+        } else if(source == menuSave) {
+
+        } else if(source == menuEnd) {
+
+        }
     }
 }

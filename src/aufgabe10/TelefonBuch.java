@@ -1,6 +1,8 @@
+// O. Bittel
+// 10.03.2017
+
 package aufgabe10;
 
-import java.util.ArrayList;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 import java.util.LinkedList;
@@ -15,19 +17,28 @@ public class TelefonBuch {
     private TreeMap<String,String> telBuch = new TreeMap<String,String>();
 
     public boolean insert(String name, String zusatz, String telNr) {
-        return true; // damit IDE kein Systaxfehler anzeigt
+
+        if(!zusatz.equals(""))
+            name += " " + zusatz;
+        if(telBuch.containsKey(name)) {
+            return false; //key already exists
+        }
+        telBuch.put(name,telNr);
+        return true;
     }
 
     public boolean remove(String name, String zusatz) {
-        return true; // damit IDE kein Systaxfehler anzeigt
+        if(!zusatz.equals(""))
+            name += " " + zusatz;
+        return telBuch.remove(name) == null;
     }
 
     public String exactSearch(String name, String zusatz) {
-        return ""; // damit IDE kein Systaxfehler anzeigt
+        return telBuch.toString();
     }
 
     public List<String> prefixSearch(String s) {
-        return new ArrayList<String>(); // damit IDE kein Systaxfehler anzeigt
+        return null; // damit IDE kein Systaxfehler anzeigt
     }
 
     public void read(File f) {
@@ -48,6 +59,7 @@ public class TelefonBuch {
         } catch (IOException ex) {
             Logger.getLogger(TelefonBuch.class.getName()).log(Level.SEVERE, null, ex);
         }
+        //System.out.println(telBuch.toString()); //debugging
     }
 
     public void save(File f) {
@@ -71,7 +83,7 @@ public class TelefonBuch {
 
     public static void main(String[] args)
             throws FileNotFoundException, IOException {
-        
+
         TelefonBuch telBuch = new TelefonBuch();
         telBuch.read(new File("TelBuchMit420Namen.txt"));
 
@@ -80,7 +92,7 @@ public class TelefonBuch {
 
         print(telBuch.prefixSearch("H"));
         System.out.println();
-        
+
         print(telBuch.prefixSearch(""));
         System.out.println();
 
@@ -91,8 +103,7 @@ public class TelefonBuch {
 
         print(telBuch.prefixSearch("Ol"));
         System.out.println();
-       
+
         telBuch.save(new File("test.txt"));
     }
 }
-
