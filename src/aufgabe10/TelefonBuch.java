@@ -34,10 +34,14 @@ public class TelefonBuch {
     }
 
     public String exactSearch(String name, String zusatz) {
-        return telBuch.toString();
+        if(!zusatz.equals(""))
+            name += " " + zusatz;
+
+        return telBuch.get(name);
     }
 
     public List<String> prefixSearch(String s) {
+        // TODO: 15.06.2022 präfix search implementieren
         return null; // damit IDE kein Systaxfehler anzeigt
     }
 

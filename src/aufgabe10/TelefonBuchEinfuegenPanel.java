@@ -89,7 +89,7 @@ public class TelefonBuchEinfuegenPanel
 
         if(source == inputBTN) {
             if(!telBuch.insert(nameTF.getText(),extraTF.getText(),numberTF.getText())) {
-                // TODO: 15.06.2022 error message -> already exists
+                JOptionPane.showMessageDialog(this, "Eintrag existiert bereits");
                 return;
             }
             nameTF.setText("");
