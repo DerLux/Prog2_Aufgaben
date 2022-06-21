@@ -54,9 +54,9 @@ public class TelefonBuchEinfuegenPanel
         JLabel numberLB = new JLabel("Telefonnummer:");
 
         // Input Textfelder erstellen:
-        nameTF = new JTextField("", 21);
-        extraTF = new JTextField("", 21);
-        numberTF = new JTextField("", 21);
+        nameTF = new JTextField("", 20);
+        extraTF = new JTextField("", 20);
+        numberTF = new JTextField("", 20);
 
         // Input Button erstellen & Größe festlegen:
         inputBTN = new JButton("Einfügen");

@@ -3,6 +3,7 @@
 
 package aufgabe10;
 
+import java.util.Locale;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 import java.util.LinkedList;
@@ -41,8 +42,12 @@ public class TelefonBuch {
     }
 
     public List<String> prefixSearch(String s) {
-        // TODO: 15.06.2022 präfix search implementieren
-        return null; // damit IDE kein Systaxfehler anzeigt
+        List<String> list = new LinkedList<>();
+        for(Entry<String, String> entry : telBuch.entrySet()) {
+            if(entry.getKey().startsWith(s.toLowerCase()) || entry.getKey().startsWith(s.toUpperCase()))
+                list.add(entry.getKey() + " " + entry.getValue());
+        }
+        return list;
     }
 
     public void read(File f) {

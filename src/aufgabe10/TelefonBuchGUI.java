@@ -72,7 +72,9 @@ public class TelefonBuchGUI extends JFrame implements ActionListener {
         outputTA.setColumns(40);
         outputTA.setRows(10);
         outputPanel.add(outputTA);
-        // TODO: 15.06.2022 Ausgabe scrollbar machen
+        JScrollPane scroll = new JScrollPane (outputTA);
+        scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 
         // Output Umrahmung erstellen:
         outputPanel.setBorder(new EmptyBorder(1, 1, 1, 1));
@@ -95,6 +97,7 @@ public class TelefonBuchGUI extends JFrame implements ActionListener {
         //mainPanel.add(new TelefonBuchSuchenLoeschenPanel(telBuch));
         this.add(searchPanel);
         this.add(outputPanel);
+        this.add(scroll);
         this.pack();
         this.setResizable(false);
         this.setVisible(true);
@@ -116,8 +119,10 @@ public class TelefonBuchGUI extends JFrame implements ActionListener {
                     outputTA.setText(sNameTF.getText() + " " + sExtraTF.getText() + ":\t" + ergebnis);
                 }
             } else if(searchBX.getSelectedIndex() == 1) { //präfix suche
+                outputTA.setText("");
                 var list = telBuch.prefixSearch(sNameTF.getText());
-                // TODO: 15.06.2022 ausgabe von list
+                for(var name:list)
+                    outputTA.append(name + "\n");
             } else if(searchBX.getSelectedIndex() == 2) { //löschen
                 if(telBuch.remove(sNameTF.getText(),sExtraTF.getText())) {
                     JOptionPane.showMessageDialog(this, "Eintrag gelöscht");
