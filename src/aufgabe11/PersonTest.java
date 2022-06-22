@@ -1,6 +1,5 @@
 package aufgabe11;
 
-import java.net.Socket;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.function.Predicate;
@@ -38,11 +37,11 @@ public class PersonTest {
         System.out.println("b)");
         Comparator<Person> cmp = (x,y)->x.getGeburtsdatum().compareTo(y.getGeburtsdatum());
         Collections.sort(personen1,cmp);
-        System.out.println(personen1.toString());
+        System.out.println(personen1);
 
         System.out.println("c)");
         Collections.sort(personen1,cmp.reversed());
-        System.out.println(personen1.toString());
+        System.out.println(personen1);
 
         System.out.println("d)");
         personen1.stream()
