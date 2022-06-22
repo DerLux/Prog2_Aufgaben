@@ -13,9 +13,8 @@ import java.io.LineNumberReader;
 import java.util.*;
 import java.util.stream.Stream;
 
-
+//für Ausgabe als Liste
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -81,10 +80,11 @@ public class HaeufigkeitsanalyseEinesDeutschenTextes {
 
         start = System.nanoTime(); // aktuelle Zeit in nsec
 
-        Stream<Map.Entry<String, Integer>> sorted =
+        //Stream<Map.Entry<String, Integer>> sorted =
                 h.entrySet().stream()
-                        .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()));
-        sorted.limit(100).forEach(System.out::println);
+                        .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
+                        .limit(100).forEach(System.out::println);
+        //sorted.limit(100).forEach(System.out::println);
 
         end = System.nanoTime();
         elapsedTime = (double)(end-start)/1.0e06; // Zeit in msec
